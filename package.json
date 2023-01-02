@@ -13,7 +13,8 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --ci ",
     "pretty-quick": "pretty-quick --staged",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "prepare": "npm run build"
   },
   "author": "Nico Domino <yo@ndo.dev>",
   "homepage": "https://github.com/ndom91/react-timezone-select",
