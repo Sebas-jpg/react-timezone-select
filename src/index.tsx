@@ -31,10 +31,8 @@ const TimezoneSelect = ({
 
         let label = ''
         let abbr = now.isDST()
-          ? // @ts-expect-error
-            tzStrings[0].daylight?.abbr
-          : // @ts-expect-error
-            tzStrings[0].standard?.abbr
+          ? tzStrings[0].daylight?.abbr
+          : tzStrings[0].standard?.abbr
         let altName = now.isDST()
           ? tzStrings[0].daylight?.name
           : tzStrings[0].standard?.name
@@ -42,7 +40,7 @@ const TimezoneSelect = ({
         const min = tz.current.offset * 60
         const hr =
           `${(min / 60) ^ 0}:` + (min % 60 === 0 ? '00' : Math.abs(min % 60))
-        const prefix = `(GMT${hr.includes('-') ? hr : `+${hr}`}) ${zone[1]}`
+        const prefix = `(UTC${hr.includes('-') ? hr : `+${hr}`}) ${zone[1]}`
 
         switch (labelStyle) {
           case 'original':
@@ -76,7 +74,7 @@ const TimezoneSelect = ({
   }
 
   const findFuzzyTz = (zone: string): ITimezoneOption => {
-    let currentTime = spacetime.now('GMT')
+    let currentTime = spacetime.now('UTC')
     try {
       currentTime = spacetime.now(zone)
     } catch (err) {
@@ -120,7 +118,7 @@ const TimezoneSelect = ({
             score += 2
           }
           score += 1
-        } else if (tz.value === 'GMT') {
+        } else if (tz.value === 'UTC') {
           score += 1
         }
         return { tz, score }

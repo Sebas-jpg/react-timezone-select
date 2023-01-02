@@ -17,7 +17,7 @@ test('loads and displays default timezone - passing string', async () => {
 
   expect(
     getByText(
-      /\(GMT\+[1-2]:00\) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna$/
+      /\(UTC\+[1-2]:00\) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna$/
     )
   ).toBeInTheDocument()
 })
@@ -27,7 +27,7 @@ test('loads and displays default timezone - passing full object', async () => {
     <TimezoneSelect
       value={{
         value: 'Europe/Amsterdam',
-        label: '(GMT+1:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna',
+        label: '(UTC+1:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna',
       }}
       onChange={e => e}
     />
@@ -35,7 +35,7 @@ test('loads and displays default timezone - passing full object', async () => {
 
   expect(
     getByText(
-      /\(GMT\+[1-2]:00\) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna$/
+      /\(UTC\+[1-2]:00\) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna$/
     )
   ).toBeInTheDocument()
 })
@@ -50,7 +50,7 @@ test('load and displays labelStyle - altName', async () => {
   )
 
   expect(
-    getByText(/\(GMT-[8-9]:00\) Alaska \(Alaska (Daylight|Standard) Time\)$/)
+    getByText(/\(UTC-[8-9]:00\) Alaska \(Alaska (Daylight|Standard) Time\)$/)
   ).toBeInTheDocument()
 })
 
@@ -63,7 +63,7 @@ test('load and displays labelStyle - abbrev', async () => {
     />
   )
 
-  expect(getByText(/\(GMT-[8-9]:00\) Alaska \(AK[D|S]T\)$/)).toBeInTheDocument()
+  expect(getByText(/\(UTC-[8-9]:00\) Alaska \(AK[D|S]T\)$/)).toBeInTheDocument()
 })
 
 test('load and displays custom timezone', async () => {
@@ -78,7 +78,7 @@ test('load and displays custom timezone', async () => {
     />
   )
 
-  expect(getByText(/\(GMT-[5-6]:00\) Pittsburgh$/)).toBeInTheDocument()
+  expect(getByText(/\(UTC-[5-6]:00\) Pittsburgh$/)).toBeInTheDocument()
 })
 
 test('load and displays only 2 custom timezone choices', async () => {
@@ -94,7 +94,7 @@ test('load and displays only 2 custom timezone choices', async () => {
     />
   )
 
-  const items = await findAllByText(container, /^\(GMT[+-][0-9]{1,2}:[0-9]{2}/)
+  const items = await findAllByText(container, /^\(UTC[+-][0-9]{1,2}:[0-9]{2}/)
   expect(items).toHaveLength(2)
 })
 
@@ -121,7 +121,7 @@ test('can determine timezone by approximate match', async () => {
 
   expect(
     getByText(
-      /\(GMT\+[1-2]:00\) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna$/
+      /\(UTC\+[1-2]:00\) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna$/
     )
   ).toBeInTheDocument()
 })
@@ -138,14 +138,14 @@ test('select drop-downs must use the fireEvent.change', () => {
 
   let selectOption = [
     ...container.querySelectorAll('div[id^="react-select"]'),
-  ].find(n => n.textContent === '(GMT-10:00) Hawaii')
+  ].find(n => n.textContent === '(UTC-10:00) Hawaii')
 
   fireEvent.click(selectOption)
 
   expect(onChangeSpy).toHaveBeenCalledTimes(1)
   expect(onChangeSpy).toHaveBeenCalledWith({
     value: 'Pacific/Honolulu',
-    label: '(GMT-10:00) Hawaii',
+    label: '(UTC-10:00) Hawaii',
     altName: 'Hawaii-Aleutian Standard Time',
     offset: -10,
     abbrev: 'HAST',
